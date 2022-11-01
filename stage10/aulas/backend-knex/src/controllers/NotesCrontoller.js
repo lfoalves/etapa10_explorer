@@ -1,11 +1,9 @@
 const knex = require("../database/knex");
 const AppError = require("../utils/AppError");
-
-let count = 0;
 class NotesController {
   async create(request, reponse) {
     const {title, description, tags, links} = request.body;
-    const { user_id } = request.params;
+    const user_id = request.user.id;
 
     if (!title || !description || !tags || !links || !user_id) {
       throw new AppError('Informações são necessárias')
@@ -43,8 +41,9 @@ class NotesController {
 
   async show(request, reponse) {
     const id = request.params.note_id;
+    const user_id = request.user.id;
 
-    const note = await knex('notes').where({ id: id }).first();
+    const note = await knex('notes').where({ id: user_id }).first();
     const tags = await knex('tags').where({ note_id: id }).orderBy('name');
     const links = await knex('links').where({ note_id: id }).orderBy('created_at');
 
@@ -62,7 +61,8 @@ class NotesController {
   }
 
   async index(request, reponse) {
-    const { user_id, title, tags } = request.query;
+    const { title, tags } = request.query;
+    const user_id = request.user.id;
 
     if (!user_id) {
       throw new AppError('Id do usuário é necessário')
