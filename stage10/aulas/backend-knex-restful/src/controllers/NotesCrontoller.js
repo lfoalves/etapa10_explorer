@@ -43,7 +43,7 @@ class NotesController {
     const id = request.params.note_id;
     const user_id = request.user.id;
 
-    const note = await knex('notes').where({ id: user_id }).first();
+    const note = await knex('notes').where({ id }).first();
     const tags = await knex('tags').where({ note_id: id }).orderBy('name');
     const links = await knex('links').where({ note_id: id }).orderBy('created_at');
 
@@ -83,6 +83,7 @@ class NotesController {
         .whereLike('notes.title', `%${title}%`)
         .whereIn('name', filterTags)
         .innerJoin('notes', 'notes.id', 'tags.note_id')
+        .groupBy('notes.id')
         .orderBy('notes.title')
     } else {
       notes = await knex('notes')
@@ -96,7 +97,7 @@ class NotesController {
       const noteTags = userTags.filter(tag => tag.note_id === note.id)
 
       return {
-        ...notes,
+        ...note,
         tags: noteTags,
       }
     });
