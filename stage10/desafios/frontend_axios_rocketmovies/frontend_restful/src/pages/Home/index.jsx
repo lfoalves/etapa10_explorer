@@ -1,28 +1,31 @@
-import { useEffect, useState } from "react";
 import { Link, useNavigate } from 'react-router-dom'
 import { useSearch } from "../../hooks/search";
-import { api } from "../../services/api";
 
-import { Container, Content, MoviesNotes } from "./styles";
+import { Container, Content, MoviesNotes, NotNotes } from "./styles";
 
 import { Header } from "../../components/Header";
 import { Section } from "../../components/Section";
 import { MovieNote } from "../../components/MovieNote";
 
-import { FiPlus } from 'react-icons/fi'
+import { FiPlus, FiBox } from 'react-icons/fi'
+import { useEffect } from 'react';
 
 export function Home() {
   const navigate = useNavigate();
-  const { movies } = useSearch();
+  const { movies, setSearch, setMovies, fetchMovieNotes } = useSearch();
 
   function handleDetails(id) {
     navigate(`/details/${id}`)
   }
 
+  useEffect(() => {
+    fetchMovieNotes()
+  }, [])
+
   return(
     <Container>
 
-      <Header />
+      <Header isSearch />
 
       <main>
         <Content>
@@ -44,7 +47,10 @@ export function Home() {
                       />
                     ))
                   ) : (
-                    <p style={{color: 'white'}}>Sem notas.</p>
+                    <NotNotes>
+                      <FiBox />
+                      <p>Sem notas.</p>
+                    </NotNotes>
                   )                  
                 }
               </MoviesNotes>

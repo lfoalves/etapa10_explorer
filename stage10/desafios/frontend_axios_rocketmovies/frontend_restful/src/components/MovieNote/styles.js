@@ -10,10 +10,10 @@ export const Container = styled.button`
 
   cursor: pointer;
 
-  transition: all 0.3s;
+  transition: all 0.2s;
 
   &:hover {
-    filter: drop-shadow(0 0 0.2rem ${({ theme }) => theme.COLORS.PINK_HOVER_100});
+    filter: drop-shadow(0 0 0.1rem ${({ theme }) => theme.COLORS.PINK_HOVER_100});
   }
 
   > h1 {

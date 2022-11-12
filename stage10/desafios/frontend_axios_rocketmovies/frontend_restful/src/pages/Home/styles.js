@@ -65,3 +65,19 @@ export const MoviesNotes = styled.div`
   flex-direction: column;
   gap: 2.4rem;
 `;
+
+export const NotNotes = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  
+  padding: 4rem;
+  border-radius: 1.6rem;
+  background-color: ${({ theme }) => theme.COLORS.BACKGROUND_INPUT};
+  
+  > svg {
+    height: 1.6rem;
+    width: 1.6rem;
+  }
+`;

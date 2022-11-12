@@ -8,16 +8,17 @@ function SearchProvider({ children }) {
   const [search, setSearch] = useState();
   const [alter, setAlter] = useState(false);
 
+  async function fetchMovieNotes() {
+    const response = await api.get(`/movies?title=${search ? search : ''}`)
+    setMovies(response.data)
+  }
+
   useEffect(() => {
-    async function fetchMovieNotes() {
-      const response = await api.get(`/movies?title=${search ? search : ''}`)
-      setMovies(response.data)
-    }
     fetchMovieNotes()
   }, [search, alter])
 
   return (
-    <SearchContext.Provider value={{ movies, setSearch, setAlter }}>
+    <SearchContext.Provider value={{ movies, setSearch, setAlter, setSearch, fetchMovieNotes }}>
       { children }
     </SearchContext.Provider>
   )

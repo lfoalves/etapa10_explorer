@@ -83,7 +83,7 @@ export function New() {
                     min={'0'}
                     max={'5'}
                     required
-                    onChange={(e) => setRating(e.target.value)}
+                    onChange={(e) => setRating(Number(e.target.value))}
                   />
                 </div>
 

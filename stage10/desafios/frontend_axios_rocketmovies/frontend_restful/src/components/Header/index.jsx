@@ -11,7 +11,7 @@ import avatarPlaceholder from '../../assets/avatar_placeholder.svg'
 
 import { Input } from "../Input";
 
-export function Header() {
+export function Header({ isSearch = false }) {
   const { signOut, user } = useAuth();
   const { setSearch } = useSearch();
   const navigate = useNavigate();
@@ -28,11 +28,14 @@ export function Header() {
       <div className="container">
         <Link to={'/'} title={'Rocketmovies'}>RocketMovies</Link>
 
-        <Input
-          type={'text'}
-          placeholder={'Pesquisar pelo título'}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+        {
+          isSearch && 
+          <Input
+            type={'text'}
+            placeholder={'Pesquisar pelo título'}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        }
 
         <Profile>
           <div>

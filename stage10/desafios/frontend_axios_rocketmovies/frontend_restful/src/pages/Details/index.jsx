@@ -15,12 +15,11 @@ import { Tag } from '../../components/Tag'
 import { GoBack } from "../../components/GoBack";
 
 import { FiClock } from 'react-icons/fi'
-import { useSearch } from "../../hooks/search";
-
+import avatarPlaceholder from '../../assets/avatar_placeholder.svg'
 export function Details() {
   const params = useParams()
   const { user } = useAuth();
-  const { setAlter } = useSearch();
+  const avatarUrl = user.avatar ? `${api.defaults.baseURL}/files/${user.avatar}` : avatarPlaceholder;
   const navigate = useNavigate();
   const [data, setData] = useState(null)
 
@@ -30,7 +29,6 @@ export function Details() {
     if (confirm) {
       await api.delete('/movies/' + noteId)
         .then(() => {
-          setAlter((prevState) => !prevState)
           alert('Nota excluída com sucesso!')
           navigate('/')
         })
@@ -74,7 +72,7 @@ export function Details() {
               </Title>
 
               <InfoUser>
-                <img src="https://www.github.com/lfoalves.png" alt="Foto do usuário" />
+                <img src={avatarUrl} alt="Foto do usuário" />
                 <p>{ user.name }</p>
                 <FiClock />
                 <span>{ data.created_at.replace(' ', ' às ').slice(0, data.created_at.length) + 'h' }</span>
@@ -82,7 +80,6 @@ export function Details() {
 
               { data.tags &&
                 <div className="tags">
-                  { console.log(data.tags)}
                   {
                     data.tags.map((tag, index) => (
                       <Tag title={tag.name} key={String(tag.id)} />

@@ -43,8 +43,6 @@ function AuthProvider({ children }) {
       }
 
       await api.put('/users', user);
-      user.newPassord = null;
-      user.oldPassord = null;
       
       localStorage.setItem('@rocketmovies:user', JSON.stringify(user))
 
